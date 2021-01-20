@@ -7,6 +7,148 @@ info:
     url: https://linkedin.com/in/devguerreiro
     email: devcorujam@gmail.com
 paths:
+  /api/schema/:
+    get:
+      operationId: api_schema_retrieve
+      description: |-
+        OpenApi3 schema for this API. Format can be selected via content negotiation.
+
+        - YAML: application/vnd.oai.openapi
+        - JSON: application/vnd.oai.openapi+json
+      parameters:
+      - in: query
+        name: format
+        schema:
+          type: string
+          enum:
+          - json
+          - yaml
+      - in: query
+        name: lang
+        schema:
+          type: string
+          enum:
+          - af
+          - ar
+          - ar-dz
+          - ast
+          - az
+          - be
+          - bg
+          - bn
+          - br
+          - bs
+          - ca
+          - cs
+          - cy
+          - da
+          - de
+          - dsb
+          - el
+          - en
+          - en-au
+          - en-gb
+          - eo
+          - es
+          - es-ar
+          - es-co
+          - es-mx
+          - es-ni
+          - es-ve
+          - et
+          - eu
+          - fa
+          - fi
+          - fr
+          - fy
+          - ga
+          - gd
+          - gl
+          - he
+          - hi
+          - hr
+          - hsb
+          - hu
+          - hy
+          - ia
+          - id
+          - ig
+          - io
+          - is
+          - it
+          - ja
+          - ka
+          - kab
+          - kk
+          - km
+          - kn
+          - ko
+          - ky
+          - lb
+          - lt
+          - lv
+          - mk
+          - ml
+          - mn
+          - mr
+          - my
+          - nb
+          - ne
+          - nl
+          - nn
+          - os
+          - pa
+          - pl
+          - pt
+          - pt-br
+          - ro
+          - ru
+          - sk
+          - sl
+          - sq
+          - sr
+          - sr-latn
+          - sv
+          - sw
+          - ta
+          - te
+          - tg
+          - th
+          - tk
+          - tr
+          - tt
+          - udm
+          - uk
+          - ur
+          - uz
+          - vi
+          - zh-hans
+          - zh-hant
+      tags:
+      - api
+      security:
+      - jwtAuth: []
+      - {}
+      responses:
+        '200':
+          content:
+            application/vnd.oai.openapi:
+              schema:
+                type: object
+                additionalProperties: {}
+            application/yaml:
+              schema:
+                type: object
+                additionalProperties: {}
+            application/vnd.oai.openapi+json:
+              schema:
+                type: object
+                additionalProperties: {}
+            application/json:
+              schema:
+                type: object
+                additionalProperties: {}
+          description: ''
   /api/v1/:
     get:
       operationId: root_list
@@ -27,6 +169,8 @@ paths:
         name: place
         schema:
           type: string
+      tags:
+      - event
       security:
       - jwtAuth: []
       responses:
@@ -39,6 +183,8 @@ paths:
     post:
       operationId: root_create
       description: create an event
+      tags:
+      - event
       requestBody:
         content:
           application/json:
@@ -77,6 +223,8 @@ paths:
           type: integer
         description: A unique integer value identifying this event.
         required: true
+      tags:
+      - event
       security:
       - jwtAuth: []
       responses:
@@ -96,6 +244,8 @@ paths:
           type: integer
         description: A unique integer value identifying this event.
         required: true
+      tags:
+      - event
       requestBody:
         content:
           application/json:
@@ -139,6 +289,8 @@ paths:
           type: integer
         description: A unique integer value identifying this event.
         required: true
+      tags:
+      - event
       requestBody:
         content:
           application/json:
@@ -181,17 +333,13 @@ paths:
           type: integer
         description: A unique integer value identifying this event.
         required: true
+      tags:
+      - event
       security:
       - jwtAuth: []
       responses:
         '204':
-          content:
-            application/json:
-              schema:
-                type: object
-                additionalProperties: {}
-                description: Unspecified response body
-          description: ''
+          description: No response body
         '400':
           content:
             application/json:
@@ -224,21 +372,15 @@ paths:
       - in: path
         name: user_id
         schema:
-          type: string
+          type: integer
         required: true
       tags:
-      - add_participant
+      - event
       security:
       - jwtAuth: []
       responses:
         '200':
-          content:
-            application/json:
-              schema:
-                type: object
-                additionalProperties: {}
-                description: Unspecified response body
-          description: ''
+          description: No response body
         '400':
           content:
             application/json:
@@ -271,21 +413,15 @@ paths:
       - in: path
         name: user_id
         schema:
-          type: string
+          type: integer
         required: true
       tags:
-      - remove_participant
+      - event
       security:
       - jwtAuth: []
       responses:
         '204':
-          content:
-            application/json:
-              schema:
-                type: object
-                additionalProperties: {}
-                description: Unspecified response body
-          description: ''
+          description: No response body
         '400':
           content:
             application/json:
@@ -482,13 +618,7 @@ paths:
       - jwtAuth: []
       responses:
         '200':
-          content:
-            application/json:
-              schema:
-                type: object
-                additionalProperties: {}
-                description: Unspecified response body
-          description: ''
+          description: No response body
         '400':
           content:
             application/json:
@@ -521,6 +651,7 @@ paths:
         name: uid
         schema:
           type: string
+          format: uuid
         required: true
       tags:
       - user
@@ -529,13 +660,7 @@ paths:
       - {}
       responses:
         '200':
-          content:
-            application/json:
-              schema:
-                type: object
-                additionalProperties: {}
-                description: Unspecified response body
-          description: ''
+          description: No response body
         '400':
           content:
             application/json:
@@ -710,9 +835,9 @@ paths:
               schema:
                 $ref: '#/components/schemas/TokenVerify'
           description: ''
-  /auth/users/:
+  /djoser/users/:
     get:
-      operationId: auth_users_list
+      operationId: djoser_users_list
       description: ''
       parameters:
       - name: page
@@ -722,7 +847,7 @@ paths:
         schema:
           type: integer
       tags:
-      - auth
+      - djoser
       security:
       - jwtAuth: []
       responses:
@@ -733,10 +858,10 @@ paths:
                 $ref: '#/components/schemas/PaginatedUserList'
           description: ''
     post:
-      operationId: auth_users_create
+      operationId: djoser_users_create
       description: ''
       tags:
-      - auth
+      - djoser
       requestBody:
         content:
           application/json:
@@ -753,9 +878,9 @@ paths:
               schema:
                 $ref: '#/components/schemas/UserCreate'
           description: ''
-  /auth/users/{id}/:
+  /djoser/users/{id}/:
     get:
-      operationId: auth_users_retrieve
+      operationId: djoser_users_retrieve
       description: ''
       parameters:
       - in: path
@@ -765,7 +890,7 @@ paths:
         description: A unique integer value identifying this custom user.
         required: true
       tags:
-      - auth
+      - djoser
       security:
       - jwtAuth: []
       responses:
@@ -776,7 +901,7 @@ paths:
                 $ref: '#/components/schemas/User'
           description: ''
     put:
-      operationId: auth_users_update
+      operationId: djoser_users_update
       description: ''
       parameters:
       - in: path
@@ -786,7 +911,7 @@ paths:
         description: A unique integer value identifying this custom user.
         required: true
       tags:
-      - auth
+      - djoser
       requestBody:
         content:
           application/json:
@@ -803,7 +928,7 @@ paths:
                 $ref: '#/components/schemas/User'
           description: ''
     patch:
-      operationId: auth_users_partial_update
+      operationId: djoser_users_partial_update
       description: ''
       parameters:
       - in: path
@@ -813,7 +938,7 @@ paths:
         description: A unique integer value identifying this custom user.
         required: true
       tags:
-      - auth
+      - djoser
       requestBody:
         content:
           application/json:
@@ -829,7 +954,7 @@ paths:
                 $ref: '#/components/schemas/User'
           description: ''
     delete:
-      operationId: auth_users_destroy
+      operationId: djoser_users_destroy
       description: ''
       parameters:
       - in: path
@@ -839,18 +964,18 @@ paths:
         description: A unique integer value identifying this custom user.
         required: true
       tags:
-      - auth
+      - djoser
       security:
       - jwtAuth: []
       responses:
         '204':
           description: No response body
-  /auth/users/activation/:
+  /djoser/users/activation/:
     post:
-      operationId: auth_users_activation_create
+      operationId: djoser_users_activation_create
       description: ''
       tags:
-      - auth
+      - djoser
       requestBody:
         content:
           application/json:
@@ -867,12 +992,12 @@ paths:
               schema:
                 $ref: '#/components/schemas/Activation'
           description: ''
-  /auth/users/me/:
+  /djoser/users/me/:
     get:
-      operationId: auth_users_me_retrieve
+      operationId: djoser_users_me_retrieve
       description: ''
       tags:
-      - auth
+      - djoser
       security:
       - jwtAuth: []
       responses:
@@ -883,10 +1008,10 @@ paths:
                 $ref: '#/components/schemas/User'
           description: ''
     put:
-      operationId: auth_users_me_update
+      operationId: djoser_users_me_update
       description: ''
       tags:
-      - auth
+      - djoser
       requestBody:
         content:
           application/json:
@@ -903,10 +1028,10 @@ paths:
                 $ref: '#/components/schemas/User'
           description: ''
     patch:
-      operationId: auth_users_me_partial_update
+      operationId: djoser_users_me_partial_update
       description: ''
       tags:
-      - auth
+      - djoser
       requestBody:
         content:
           application/json:
@@ -922,21 +1047,21 @@ paths:
                 $ref: '#/components/schemas/User'
           description: ''
     delete:
-      operationId: auth_users_me_destroy
+      operationId: djoser_users_me_destroy
       description: ''
       tags:
-      - auth
+      - djoser
       security:
       - jwtAuth: []
       responses:
         '204':
           description: No response body
-  /auth/users/resend_activation/:
+  /djoser/users/resend_activation/:
     post:
-      operationId: auth_users_resend_activation_create
+      operationId: djoser_users_resend_activation_create
       description: ''
       tags:
-      - auth
+      - djoser
       requestBody:
         content:
           application/json:
@@ -953,12 +1078,12 @@ paths:
               schema:
                 $ref: '#/components/schemas/SendEmailReset'
           description: ''
-  /auth/users/reset_email/:
+  /djoser/users/reset_email/:
     post:
-      operationId: auth_users_reset_email_create
+      operationId: djoser_users_reset_email_create
       description: ''
       tags:
-      - auth
+      - djoser
       requestBody:
         content:
           application/json:
@@ -975,12 +1100,12 @@ paths:
               schema:
                 $ref: '#/components/schemas/SendEmailReset'
           description: ''
-  /auth/users/reset_email_confirm/:
+  /djoser/users/reset_email_confirm/:
     post:
-      operationId: auth_users_reset_email_confirm_create
+      operationId: djoser_users_reset_email_confirm_create
       description: ''
       tags:
-      - auth
+      - djoser
       requestBody:
         content:
           application/json:
@@ -997,12 +1122,12 @@ paths:
               schema:
                 $ref: '#/components/schemas/UsernameResetConfirm'
           description: ''
-  /auth/users/reset_password/:
+  /djoser/users/reset_password/:
     post:
-      operationId: auth_users_reset_password_create
+      operationId: djoser_users_reset_password_create
       description: ''
       tags:
-      - auth
+      - djoser
       requestBody:
         content:
           application/json:
@@ -1019,12 +1144,12 @@ paths:
               schema:
                 $ref: '#/components/schemas/SendEmailReset'
           description: ''
-  /auth/users/reset_password_confirm/:
+  /djoser/users/reset_password_confirm/:
     post:
-      operationId: auth_users_reset_password_confirm_create
+      operationId: djoser_users_reset_password_confirm_create
       description: ''
       tags:
-      - auth
+      - djoser
       requestBody:
         content:
           application/json:
@@ -1041,12 +1166,12 @@ paths:
               schema:
                 $ref: '#/components/schemas/PasswordResetConfirm'
           description: ''
-  /auth/users/set_email/:
+  /djoser/users/set_email/:
     post:
-      operationId: auth_users_set_email_create
+      operationId: djoser_users_set_email_create
       description: ''
       tags:
-      - auth
+      - djoser
       requestBody:
         content:
           application/json:
@@ -1062,12 +1187,12 @@ paths:
               schema:
                 $ref: '#/components/schemas/SetUsername'
           description: ''
-  /auth/users/set_password/:
+  /djoser/users/set_password/:
     post:
-      operationId: auth_users_set_password_create
+      operationId: djoser_users_set_password_create
       description: ''
       tags:
-      - auth
+      - djoser
       requestBody:
         content:
           application/json:
@@ -1082,148 +1207,6 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/SetPassword'
-          description: ''
-  /schema/:
-    get:
-      operationId: schema_retrieve
-      description: |-
-        OpenApi3 schema for this API. Format can be selected via content negotiation.
-
-        - YAML: application/vnd.oai.openapi
-        - JSON: application/vnd.oai.openapi+json
-      parameters:
-      - in: query
-        name: format
-        schema:
-          type: string
-          enum:
-          - json
-          - yaml
-      - in: query
-        name: lang
-        schema:
-          type: string
-          enum:
-          - af
-          - ar
-          - ar-dz
-          - ast
-          - az
-          - be
-          - bg
-          - bn
-          - br
-          - bs
-          - ca
-          - cs
-          - cy
-          - da
-          - de
-          - dsb
-          - el
-          - en
-          - en-au
-          - en-gb
-          - eo
-          - es
-          - es-ar
-          - es-co
-          - es-mx
-          - es-ni
-          - es-ve
-          - et
-          - eu
-          - fa
-          - fi
-          - fr
-          - fy
-          - ga
-          - gd
-          - gl
-          - he
-          - hi
-          - hr
-          - hsb
-          - hu
-          - hy
-          - ia
-          - id
-          - ig
-          - io
-          - is
-          - it
-          - ja
-          - ka
-          - kab
-          - kk
-          - km
-          - kn
-          - ko
-          - ky
-          - lb
-          - lt
-          - lv
-          - mk
-          - ml
-          - mn
-          - mr
-          - my
-          - nb
-          - ne
-          - nl
-          - nn
-          - os
-          - pa
-          - pl
-          - pt
-          - pt-br
-          - ro
-          - ru
-          - sk
-          - sl
-          - sq
-          - sr
-          - sr-latn
-          - sv
-          - sw
-          - ta
-          - te
-          - tg
-          - th
-          - tk
-          - tr
-          - tt
-          - udm
-          - uk
-          - ur
-          - uz
-          - vi
-          - zh-hans
-          - zh-hant
-      tags:
-      - schema
-      security:
-      - jwtAuth: []
-      - {}
-      responses:
-        '200':
-          content:
-            application/vnd.oai.openapi:
-              schema:
-                type: object
-                additionalProperties: {}
-            application/yaml:
-              schema:
-                type: object
-                additionalProperties: {}
-            application/vnd.oai.openapi+json:
-              schema:
-                type: object
-                additionalProperties: {}
-            application/json:
-              schema:
-                type: object
-                additionalProperties: {}
           description: ''
 components:
   schemas:

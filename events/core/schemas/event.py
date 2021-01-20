@@ -1,4 +1,4 @@
-from drf_spectacular.utils import extend_schema, inline_serializer
+from drf_spectacular.utils import OpenApiParameter, extend_schema
 
 from events.core.schemas.reusable import bad_request_serializer, forbidden_request_serializer
 from events.core.serializers import CreateEventSerializer, UpdateEventSerializer
@@ -34,10 +34,11 @@ CREATE_SCHEMA = extend_schema(
         "403": forbidden_request_serializer,
     },
 )
+
 DESTROY_SCHEMA = extend_schema(
     description="delete an event",
     responses={
-        "204": inline_serializer,
+        "204": None,
         "400": bad_request_serializer,
         "403": forbidden_request_serializer,
         "404": bad_request_serializer,
@@ -46,8 +47,12 @@ DESTROY_SCHEMA = extend_schema(
 
 ADD_PARTICIPANT_SCHEMA = extend_schema(
     description="add participant to an event",
+    parameters=[
+        OpenApiParameter("user_id", int, location=OpenApiParameter.PATH),
+    ],
+    request=None,
     responses={
-        "200": inline_serializer,
+        "200": None,
         "400": bad_request_serializer,
         "403": forbidden_request_serializer,
         "404": bad_request_serializer,
@@ -56,8 +61,12 @@ ADD_PARTICIPANT_SCHEMA = extend_schema(
 
 REMOVE_PARTICIPANT_SCHEMA = extend_schema(
     description="remove participant from an event",
+    parameters=[
+        OpenApiParameter("user_id", int, location=OpenApiParameter.PATH),
+    ],
+    request=None,
     responses={
-        "204": inline_serializer,
+        "204": None,
         "400": bad_request_serializer,
         "403": forbidden_request_serializer,
         "404": bad_request_serializer,

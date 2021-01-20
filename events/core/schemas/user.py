@@ -1,4 +1,5 @@
-from drf_spectacular.utils import extend_schema, inline_serializer
+from drf_spectacular.types import OpenApiTypes
+from drf_spectacular.utils import OpenApiParameter, extend_schema
 
 from events.core.schemas.reusable import bad_request_serializer, forbidden_request_serializer
 from events.core.serializers import ListEventSerializer, ListInvitationSerializer, ListUserSerializer
@@ -6,7 +7,7 @@ from events.core.serializers import ListEventSerializer, ListInvitationSerialize
 DELETE_USER = extend_schema(
     description="remove an friendship",
     responses={
-        "200": inline_serializer,
+        "200": None,
         "400": bad_request_serializer,
         "403": forbidden_request_serializer,
         "404": bad_request_serializer,
@@ -15,8 +16,12 @@ DELETE_USER = extend_schema(
 
 ACCOUNT_ACTIVATION_USER = extend_schema(
     description="active an user account",
+    parameters=[
+        OpenApiParameter("uid", OpenApiTypes.UUID, OpenApiParameter.PATH),
+        OpenApiParameter("token", OpenApiTypes.STR, OpenApiParameter.PATH),
+    ],
     responses={
-        "200": inline_serializer,
+        "200": None,
         "400": bad_request_serializer,
     },
 )

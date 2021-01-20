@@ -53,7 +53,7 @@ class UserViewSet(GenericViewSet):
     def account_activation(self, _, uid, token):
         data = {"uid": uid, "token": token}
 
-        path = "/auth/users/activation/"
+        path = "/djoser/users/activation/"
 
         factory = APIRequestFactory()
         request = factory.post(path, data, format="json")
