@@ -38,6 +38,7 @@ from events.core.serializers import (
     remove_participant=REMOVE_PARTICIPANT_SCHEMA,
 )
 class EventViewSet(ModelViewSet):
+    lookup_value_regex = "[0-9]+"
     queryset = Event.objects.all()
     filterset_class = EventFilter
     per_action_permission = {
