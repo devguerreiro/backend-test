@@ -26,6 +26,7 @@ drf-spectacular = "^0.13.0"
 Sphinx = "^3.4.3"
 sphinx-redactor-theme = "^0.0.1"
 sphinxcontrib-redoc = "^1.6.0"
+safety = "^1.10.3"
 
 [build-system]
 requires = ["poetry-core>=1.0.0"]
