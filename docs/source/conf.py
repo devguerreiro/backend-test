@@ -1,8 +1,5 @@
 import sphinx_redactor_theme
 
-html_theme = "sphinx_redactor_theme"
-html_theme_path = [sphinx_redactor_theme.get_html_theme_path()]
-
 # -- Project information -----------------------------------------------------
 
 project = "events"
@@ -28,6 +25,9 @@ redoc = [
     {"name": "Event Documentation", "page": "src/redoc_api", "spec": "api/schema.yml", "embed": True},
 ]
 
+# all funcionalities to redoc html
+redoc_uri = "https://cdn.jsdelivr.net/npm/redoc@next/bundles/redoc.standalone.js"
+
 # Add any paths that contain templates here, relative to this directory.
 templates_path = ["_templates"]
 
@@ -47,3 +47,9 @@ exclude_patterns = []
 # relative to this directory. They are copied after the builtin static files,
 # so a file named "default.css" will overwrite the builtin "default.css".
 html_static_path = ["_static"]
+
+html_theme = "sphinx_redactor_theme"
+html_theme_path = [sphinx_redactor_theme.get_html_theme_path()]
+
+html_favicon = "_static/favicon.ico"
+html_logo = "_static/coruja-logo.jpg"

@@ -3,6 +3,12 @@ Third-Party Packages
 
 This project was builded using **Python 3.8**, **Django 3.1** and **DRF 3.12**.
 
+Dependencies
+____________
+
+* safety_ - To check if there is any vulnerability in some dependency. To run use::
+
+    $ safety check
 
 Documentation
 -------------
@@ -40,6 +46,7 @@ Filter
 
 * django-filter_ - Easy way to add filter to model fields or create custom filters.
 
+.. _safety: https://github.com/pyupio/safety
 .. _coverage: https://coverage.readthedocs.io/en/coverage-5.3.1/
 .. _drf-spectacular: https://drf-spectacular.readthedocs.io/en/latest/
 .. _sphinx: https://www.sphinx-doc.org/en/master/usage/quickstart.html
