@@ -9,6 +9,7 @@ services:
     image: postgres
     container_name: db
     env_file: .env
+    restart: always
     networks:
       - db
   backend:
@@ -19,6 +20,7 @@ services:
       - db
     ports:
       - "8000:8000"
+    restart: always
     volumes:
       - .:/code
     command: "./wait-for-it.sh db:5432 -- python manage.py runserver 0:8000"
