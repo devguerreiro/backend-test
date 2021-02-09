@@ -1,0 +1,28 @@
+version: "3.9"
+
+networks:
+  backend:
+  db:
+
+services:
+  db:
+    image: postgres
+    container_name: db
+    env_file: .env
+    restart: always
+    networks:
+      - db
+  backend:
+    build: .
+    container_name: backend
+    networks:
+      - backend
+      - db
+    ports:
+      - "8000:8000"
+    restart: always
+    volumes:
+      - .:/code
+    command: "./wait-for-it.sh db:5432 -- python manage.py runserver 0:8000"
+    depends_on:
+      - db
